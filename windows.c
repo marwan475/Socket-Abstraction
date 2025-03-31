@@ -1,4 +1,4 @@
-#include <socketAB.h>
+#include "socketAB.h"
 #include <winsock2.h>
 #include <stdio.h>
 
@@ -73,7 +73,7 @@ int UDP_Sendto(int socket, int destport, char* destip, char* sendbuf, int sendsi
 int UDP_Bind(int socket, int port){
 
   SOCKADDR_IN srcinfo;
-  int status;
+  int status = sizeof(srcinfo);
 
   srcinfo.sin_family = AF_INET;
   srcinfo.sin_port = htons(port);
@@ -96,7 +96,7 @@ int UDP_Recvfrom(int socket, char* buff, int buffsize){
   SOCKADDR_IN srcinfo;
   int srcinfosize;
 
-  return recvfrom((SOCKET) socket, buff, buffsize, (SOCKADDR *)&srcinfo, &srcinfosize);
+  return recvfrom((SOCKET) socket, buff, buffsize, 0,(SOCKADDR *)&srcinfo, &srcinfosize);
 
 }
 
